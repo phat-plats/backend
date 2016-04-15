@@ -64,3 +64,25 @@ def vote(request):
         return JsonResponse({"success": True, "score": cmt.score})
     except:
         return JsonResponse({"success": True, "score": 0})
+
+def lookup(request):
+    try:
+        upc = request.GET["upc"]
+        product = Product.objects.get(upc=upc)
+        prodJson = {
+            "upc": upc,
+            "name": product.name,
+            "recycle": product.recyclingType,
+            "harmful_ingredients": []
+        }
+        for hazmat in product.hazmats.all():
+            prodJson["harmful_ingredients"].append(hazmat.material)
+        return JsonResponse({
+            "success": True,
+            "product": prodJson
+        })
+    except(e):
+        return JsonResponse({
+            "success": False,
+            "product": {}
+        })

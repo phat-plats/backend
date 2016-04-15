@@ -18,5 +18,5 @@ class Comment(models.Model):
 
 class HazMat(models.Model):
     material = models.CharField(max_length=140)
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, related_name="hazmats")
 # Create your models here.
