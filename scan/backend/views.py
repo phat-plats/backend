@@ -33,3 +33,22 @@ def getPosts(request):
             "contents": str(comment.contents)
         })
     return JsonResponse(posts)
+
+def auth(request):
+    username = request.GET["username"]
+    password = request.GET["password"]
+    try:
+        user = InsecureUser.objects.get(username=username, password=password)
+        return JsonResponse({"success": True})
+    except:
+        return JsonResponse({"success": False})
+
+def register(request):
+    username = request.POST["username"]
+    password = request.POST["password"]
+    success = True
+    try:
+        user = InsecureUser.objects.create(username=username, password=password)
+    except:
+        success = false
+    return JsonResponse({"success": success})

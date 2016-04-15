@@ -20,5 +20,7 @@ from backend.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'post/', post),
-    url(r'posts/', getPosts)
+    url(r'posts/', getPosts),
+    url(r'auth/', auth),
+    url(r'register/', register)
 ]
