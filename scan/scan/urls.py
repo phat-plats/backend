@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'post/', post),
     url(r'posts/', getPosts),
     url(r'auth/', auth),
-    url(r'register/', register)
+    url(r'register/', register),
+    url(r'vote/', vote)
 ]

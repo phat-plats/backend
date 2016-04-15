@@ -28,6 +28,7 @@ def getPosts(request):
     }
     for comment in Comment.objects.filter(product__upc=upc).order_by('-score'):
         posts["posts"].append({
+            "id": comment.id,
             "score": int(comment.score),
             "poster": str(comment.poster),
             "contents": str(comment.contents)
@@ -52,3 +53,14 @@ def register(request):
     except:
         success = false
     return JsonResponse({"success": success})
+
+def vote(request):
+    try:
+        up = request.POST["up"]
+        cid = request.POST["id"]
+        cmt = Comment.objects.get(id=cid)
+        cmt.score += 1 if up == "true" else -1
+        cmt.save()
+        return JsonResponse({"success": True, "score": cmt.score})
+    except:
+        return JsonResponse({"success": True, "score": 0})
