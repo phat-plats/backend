@@ -93,24 +93,18 @@ def search(request):
     try:
         response = {
             "success": True,
-            "products": []
+            "items": []
         }
         products = Product.objects.filter(Q(upc__icontains=request.GET["term"]) | Q(name__icontains=request.GET["term"]))[:10]
         for product in products:
             prodJson = {
                 "upc": product.upc,
-                "name": product.name,
-                "recycle": product.recyclingType,
-                "imageUrl": product.imageUrl,
-                "harmful_ingredients": []
+                "name": product.name
             }
-            for hazmat in product.hazmats.all():
-                prodJson["harmful_ingredients"].append(hazmat.material)
-
             response["products"].append(prodJson)
         return JsonResponse(response)
     except:
         return JsonResponse({
             "success": False,
-            "products": []
+            "items": []
         })
