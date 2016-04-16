@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'register/', register),
     url(r'vote/', vote),
     url(r'lookup/', lookup),
+    url(r'search/', search),
 ]
