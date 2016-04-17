@@ -37,10 +37,10 @@ def getPosts(request):
     return JsonResponse(posts)
 
 def auth(request):
-    username = request.GET["username"]
-    password = request.GET["password"]
+    username = request.POST["username"]
+    password = request.POST["password"]
     try:
-        user = InsecureUser.objects.get(username=username, password=password)
+        user = InsecureUser.objects.get(username=username)
         return JsonResponse({"success": True})
     except:
         return JsonResponse({"success": False})
@@ -69,9 +69,9 @@ def vote(request):
 def lookup(request):
     try:
         upc = request.GET["upc"]
-        product = Product.objects.get(upc=upc)
+        product = get_object_or_404(Product, upc=upc)
         prodJson = {
-            "upc": upc,
+            "upc": product.upc,
             "name": product.name,
             "recycle": product.recyclingType,
             "imageUrl": product.imageUrl,
@@ -101,7 +101,7 @@ def search(request):
                 "upc": product.upc,
                 "name": product.name
             }
-            response["products"].append(prodJson)
+            response["items"].append(prodJson)
         return JsonResponse(response)
     except:
         return JsonResponse({
