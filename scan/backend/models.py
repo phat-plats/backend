@@ -19,6 +19,8 @@ class Comment(models.Model):
     poster = models.CharField(max_length=80)
     score = models.IntegerField(default=0)
     product = models.ForeignKey(Product)
+    def __str__(self):
+        return self.poster + " | " + self.product.name
 
 class HazMat(models.Model):
     material = models.CharField(max_length=140)

@@ -9,13 +9,14 @@ def post(request):
     poster = request.POST["poster"]
     contents = request.POST["contents"]
     prod = Product.objects.get(upc=upc)
-    Comment.objects.create(
+    comment = Comment.objects.create(
         product=prod,
         poster=poster,
         contents=contents
     )
     return JsonResponse({
         "success": True,
+        "id": comment.id,
         "poster": str(poster),
         "contents": str(contents),
         "score": 0
@@ -57,10 +58,11 @@ def register(request):
 
 def vote(request):
     try:
-        up = request.POST["up"]
         cid = request.POST["id"]
+        increment = request.POST["increment"]
         cmt = Comment.objects.get(id=cid)
-        cmt.score += 1 if up == "true" else -1
+        print(cmt.score)
+        cmt.score += int(increment)
         cmt.save()
         return JsonResponse({"success": True, "score": cmt.score})
     except:
