@@ -32,8 +32,8 @@ def getPosts(request):
         posts["posts"].append({
             "id": comment.id,
             "score": int(comment.score),
-            "poster": str(comment.poster),
-            "contents": str(comment.contents)
+            "poster": comment.poster.encode('utf-8'),
+            "contents": comment.contents.encode('utf-8')
         })
     return JsonResponse(posts)
 
