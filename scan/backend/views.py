@@ -97,7 +97,7 @@ def search(request):
             "success": True,
             "items": []
         }
-        products = Product.objects.filter(Q(upc__icontains=request.GET["term"]) | Q(name__icontains=request.GET["term"]))[:10]
+        products = Product.objects.filter(Q(upc__icontains=request.GET["term"]) | Q(searchName__icontains=request.GET["term"]))[:10]
         for product in products:
             prodJson = {
                 "upc": product.upc,
