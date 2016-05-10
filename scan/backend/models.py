@@ -8,6 +8,7 @@ class InsecureUser(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=140)
+    searchName = models.CharField(max_length=140, null=True, blank=True)
     upc = models.CharField(max_length=16)
     imageUrl = models.CharField(max_length=1024, default="https://placeholdit.imgix.net/~text?txtsize=19&txt=200%C3%97300&w=200&h=300")
     recyclingType = models.IntegerField(null=True, blank=True)
